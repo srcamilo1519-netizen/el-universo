@@ -1,0 +1,424 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "Orbitron", "JetBrains Mono", monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-cosmos-deep: var(--cosmos-deep);
+  --color-cosmos-void: var(--cosmos-void);
+  --color-cosmos-night: var(--cosmos-night);
+  --color-cosmos-blue: var(--cosmos-blue);
+  --color-cosmos-cyan: var(--cosmos-cyan);
+  --color-cosmos-violet: var(--cosmos-violet);
+  --color-cosmos-star: var(--cosmos-star);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Deep cosmos palette */
+  --cosmos-deep: oklch(0.08 0.02 270);     /* #030712 */
+  --cosmos-void: oklch(0.11 0.03 265);     /* #050816 */
+  --cosmos-night: oklch(0.16 0.04 260);    /* #0B1120 */
+  --cosmos-blue: oklch(0.58 0.22 260);     /* #2563EB */
+  --cosmos-cyan: oklch(0.82 0.15 210);     /* #22D3EE */
+  --cosmos-violet: oklch(0.55 0.25 290);   /* #7C3AED */
+  --cosmos-star: oklch(0.98 0.005 250);    /* #F8FAFC */
+
+  --background: var(--cosmos-deep);
+  --foreground: oklch(0.98 0.005 250);
+  --card: oklch(0.14 0.03 260 / 0.6);
+  --card-foreground: oklch(0.98 0.005 250);
+  --popover: oklch(0.12 0.03 260);
+  --popover-foreground: oklch(0.98 0.005 250);
+  --primary: var(--cosmos-cyan);
+  --primary-foreground: oklch(0.08 0.02 270);
+  --secondary: oklch(0.2 0.04 260);
+  --secondary-foreground: oklch(0.98 0.005 250);
+  --muted: oklch(0.18 0.03 260);
+  --muted-foreground: oklch(0.7 0.02 250);
+  --accent: var(--cosmos-violet);
+  --accent-foreground: oklch(0.98 0.005 250);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 250);
+  --border: oklch(1 0 0 / 0.08);
+  --input: oklch(1 0 0 / 0.1);
+  --ring: var(--cosmos-cyan);
+}
+
+.dark {
+  --background: var(--cosmos-deep);
+  --foreground: oklch(0.98 0.005 250);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body, #root {
+    background: var(--cosmos-deep);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+  body {
+    margin: 0;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ===== Cosmic background layers ===== */
+.cosmos-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 30%, oklch(0.25 0.18 280 / 0.35), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, oklch(0.3 0.18 220 / 0.3), transparent 55%),
+    radial-gradient(ellipse at 50% 50%, oklch(0.15 0.05 260 / 0.6), transparent 70%),
+    linear-gradient(180deg, var(--cosmos-deep), var(--cosmos-void));
+}
+
+.cosmos-stars, .cosmos-stars-2, .cosmos-stars-3 {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+.cosmos-stars {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, white, transparent),
+    radial-gradient(1px 1px at 60px 100px, white, transparent),
+    radial-gradient(1.5px 1.5px at 130px 80px, white, transparent),
+    radial-gradient(1px 1px at 200px 200px, #cbe6ff, transparent),
+    radial-gradient(1px 1px at 280px 50px, white, transparent),
+    radial-gradient(1.5px 1.5px at 350px 250px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 300px, #b6d4ff, transparent);
+  background-size: 400px 400px;
+  opacity: 0.6;
+  animation: starDrift 200s linear infinite;
+}
+.cosmos-stars-2 {
+  background-image:
+    radial-gradient(1px 1px at 50px 50px, white, transparent),
+    radial-gradient(1px 1px at 180px 120px, #d4e7ff, transparent),
+    radial-gradient(2px 2px at 300px 300px, white, transparent),
+    radial-gradient(1px 1px at 450px 80px, #c9dcff, transparent);
+  background-size: 600px 600px;
+  opacity: 0.5;
+  animation: starDrift 350s linear infinite reverse;
+}
+.cosmos-stars-3 {
+  background-image:
+    radial-gradient(2px 2px at 100px 200px, white, transparent),
+    radial-gradient(1.5px 1.5px at 400px 400px, #e6f0ff, transparent);
+  background-size: 800px 800px;
+  opacity: 0.7;
+  animation: twinkle 6s ease-in-out infinite;
+}
+@keyframes starDrift {
+  from { transform: translate3d(0,0,0); }
+  to { transform: translate3d(-400px, -200px, 0); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+/* ===== Horizontal scroll container ===== */
+.cosmos-scroll {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.cosmos-scroll::-webkit-scrollbar { display: none; }
+.cosmos-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+}
+.cosmos-slide {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 6vw, 6rem);
+}
+
+/* ===== Premium UI elements ===== */
+.glass {
+  background: linear-gradient(135deg, oklch(1 0 0 / 0.04), oklch(1 0 0 / 0.01));
+  border: 1px solid oklch(1 0 0 / 0.08);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+}
+.glass-strong {
+  background: linear-gradient(135deg, oklch(1 0 0 / 0.08), oklch(1 0 0 / 0.02));
+  border: 1px solid oklch(1 0 0 / 0.12);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
+}
+.holo-line {
+  background: linear-gradient(90deg, transparent, var(--cosmos-cyan), transparent);
+  height: 1px;
+  opacity: 0.5;
+}
+.glow-cyan { box-shadow: 0 0 40px -8px var(--cosmos-cyan), 0 0 100px -30px var(--cosmos-cyan); }
+.glow-violet { box-shadow: 0 0 40px -8px var(--cosmos-violet), 0 0 100px -30px var(--cosmos-violet); }
+.text-glow { text-shadow: 0 0 30px oklch(0.82 0.15 210 / 0.4); }
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, #fff 0%, #fff 50%, oklch(0.7 0.05 250) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--cosmos-cyan);
+}
+
+.btn-cosmic {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.8rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border: 1px solid oklch(1 0 0 / 0.15);
+  background: linear-gradient(135deg, oklch(1 0 0 / 0.06), oklch(1 0 0 / 0.02));
+  color: #fff;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  backdrop-filter: blur(20px);
+  cursor: pointer;
+}
+.btn-cosmic:hover {
+  border-color: var(--cosmos-cyan);
+  background: linear-gradient(135deg, oklch(0.82 0.15 210 / 0.15), oklch(0.55 0.25 290 / 0.1));
+  box-shadow: 0 0 60px -10px var(--cosmos-cyan);
+  transform: translateY(-2px);
+}
+.btn-cosmic-primary {
+  background: linear-gradient(135deg, var(--cosmos-cyan), var(--cosmos-blue));
+  border-color: transparent;
+  color: var(--cosmos-deep);
+}
+.btn-cosmic-primary:hover {
+  box-shadow: 0 0 60px -5px var(--cosmos-cyan), 0 0 120px -20px var(--cosmos-violet);
+}
+
+/* Bigbang animation */
+@keyframes bigbang {
+  0% { transform: scale(0); opacity: 1; box-shadow: 0 0 0 0 oklch(1 0 0 / 0.8); }
+  60% { opacity: 1; }
+  100% { transform: scale(40); opacity: 0; box-shadow: 0 0 200px 80px oklch(0.82 0.15 210 / 0.2); }
+}
+.bigbang-core {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: radial-gradient(circle, #fff, oklch(0.82 0.15 210));
+  animation: bigbang 6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+@keyframes shockwave {
+  0% { transform: scale(0); opacity: 0.8; border-width: 3px; }
+  100% { transform: scale(15); opacity: 0; border-width: 0.5px; }
+}
+.shockwave {
+  position: absolute;
+  width: 60px; height: 60px;
+  border: 2px solid oklch(0.82 0.15 210 / 0.5);
+  border-radius: 50%;
+  animation: shockwave 6s ease-out infinite;
+}
+
+/* Galaxy spinner */
+@keyframes galaxySpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.galaxy-disk {
+  position: absolute;
+  border-radius: 50%;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0%,
+      oklch(0.82 0.15 210 / 0.3) 10%,
+      oklch(0.55 0.25 290 / 0.4) 25%,
+      transparent 40%,
+      oklch(0.7 0.2 320 / 0.3) 60%,
+      oklch(0.82 0.15 210 / 0.4) 80%,
+      transparent 100%);
+  filter: blur(30px);
+  animation: galaxySpin 120s linear infinite;
+}
+
+/* Floating particles */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+.float { animation: floatY 8s ease-in-out infinite; }
+
+/* Typing dots */
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+.typing-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cosmos-cyan);
+  animation: typingDot 1.4s ease-in-out infinite;
+}
+
+/* Holographic scanlines (subtle) */
+.scanlines::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    oklch(0.82 0.15 210 / 0.02) 3px,
+    oklch(0.82 0.15 210 / 0.02) 4px
+  );
+  pointer-events: none;
+}
+
+/* Scroll progress */
+.progress-track {
+  position: fixed; bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex; gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: oklch(0.08 0.02 270 / 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid oklch(1 0 0 / 0.08);
+}
+.progress-dot {
+  width: 24px; height: 4px; border-radius: 2px;
+  background: oklch(1 0 0 / 0.15);
+  transition: all 0.5s ease;
+  cursor: pointer;
+  border: none;
+}
+.progress-dot.active {
+  background: var(--cosmos-cyan);
+  box-shadow: 0 0 12px var(--cosmos-cyan);
+  width: 48px;
+}
+
+/* Top nav */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 40;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 2rem;
+  pointer-events: none;
+}
+.top-nav > * { pointer-events: auto; }
+
+/* Scroll hint */
+@keyframes scrollHint {
+  0%, 100% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(8px); opacity: 1; }
+}
+.scroll-hint { animation: scrollHint 2s ease-in-out infinite; }
+
+/* AI panel */
+.ai-panel {
+  position: fixed;
+  right: 0; top: 0; bottom: 0;
+  width: min(480px, 100vw);
+  z-index: 60;
+  background: linear-gradient(180deg, oklch(0.1 0.03 265 / 0.92), oklch(0.06 0.02 270 / 0.95));
+  backdrop-filter: blur(40px) saturate(140%);
+  border-left: 1px solid oklch(0.82 0.15 210 / 0.2);
+  box-shadow: -40px 0 100px -20px oklch(0.82 0.15 210 / 0.15);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ai-panel.open { transform: translateX(0); }
+
+/* Timeline */
+.timeline-line {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--cosmos-cyan) 10%,
+    var(--cosmos-violet) 50%,
+    var(--cosmos-cyan) 90%,
+    transparent);
+  box-shadow: 0 0 20px var(--cosmos-cyan);
+}
+
+/* Data panel */
+.data-panel {
+  border: 1px solid oklch(0.82 0.15 210 / 0.15);
+  background: linear-gradient(135deg, oklch(0.13 0.03 265 / 0.5), oklch(0.08 0.02 270 / 0.5));
+  backdrop-filter: blur(20px);
+  position: relative;
+}
+.data-panel::before {
+  content: ""; position: absolute;
+  top: 0; left: 0; width: 40px; height: 1px;
+  background: var(--cosmos-cyan);
+  box-shadow: 0 0 10px var(--cosmos-cyan);
+}
+.data-panel::after {
+  content: ""; position: absolute;
+  bottom: 0; right: 0; width: 40px; height: 1px;
+  background: var(--cosmos-violet);
+  box-shadow: 0 0 10px var(--cosmos-violet);
+}
